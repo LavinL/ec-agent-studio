@@ -10,6 +10,8 @@ npm run dev
 
 打开 `http://localhost:3000`。必须在 `.env.local` 填写 OpenAI 或兼容 API 配置，5 个 Skill 始终调用真实模型；未配置或调用失败时会直接返回错误，不生成模拟结果。
 
+Planner 和 Skill 的模型调用要求返回 JSON。使用 DeepSeek 官方接口或火山方舟接口时，请求会关闭深度思考，将输出 token 预算用于最终 JSON。若输出仍达到 `maxTokens` 上限，接口会明确报告发生截断的能力及上限；可在对应的 Planner 或 Skill 配置中提高 `maxTokens`。
+
 ## 数据与规则
 
 - `skills/<skill-name>/SKILL.md`：标准 Skill 触发描述与执行指令

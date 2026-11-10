@@ -25,6 +25,8 @@ function parseJson(text: string): Json {
 async function callModel(skill: Skill, input: unknown): Promise<Json> {
   const cfg = apiConfig();
   if (!cfg.key) throw new Error("未配置模型 API Key，请在 .env.local 中设置 OPENAI_API_KEY 或 DEEPSEEK_API_KEY。");
+  const hostname = new URL(cfg.base).hostname;
+  const disableThinking = hostname === "api.deepseek.com" || (hostname.startsWith("ark.") && hostname.endsWith(".volces.com"));
   const res = await fetch(`${cfg.base}/chat/completions`, {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${cfg.key}` },
@@ -32,13 +34,23 @@ async function callModel(skill: Skill, input: unknown): Promise<Json> {
       model: skill.model && skill.model !== "default" ? skill.model : cfg.model,
       temperature: skill.temperature,
       max_tokens: skill.maxTokens,
+      // These structured tasks need the token budget for JSON, not reasoning.
+      ...(disableThinking ? { thinking: { type: "disabled" } } : {}),
       response_format: { type: "json_object" },
       messages: [{ role: "system", content: skill.prompt }, { role: "user", content: JSON.stringify(input) }]
     })
   });
   if (!res.ok) throw new Error(`模型 API ${res.status}: ${(await res.text()).slice(0, 180)}`);
   const data = await res.json();
-  return parseJson(data.choices?.[0]?.message?.content || "");
+  const choice = data.choices?.[0];
+  if (choice?.finish_reason === "length") {
+    throw new Error(`能力 ${skill.id} 的模型输出被截断（finish_reason=length，max_tokens=${skill.maxTokens}）。请提高该能力的 maxTokens，并检查模型的深度思考设置。`);
+  }
+  try {
+    return parseJson(choice?.message?.content || "");
+  } catch (error) {
+    throw new Error(`能力 ${skill.id} 的模型返回无效 JSON（finish_reason=${choice?.finish_reason || "unknown"}）：${error instanceof Error ? error.message : String(error)}`);
+  }
 }
 
 function toStringList(value: unknown): string[] {

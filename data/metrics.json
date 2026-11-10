@@ -1,5 +1,91 @@
 [
   {
+    "id": "1193b06b-8cd1-4637-aa60-670af779fe39",
+    "requestId": "4dd20c2b-9b1f-4ee2-8088-ac7101d0fc10",
+    "createdAt": "2026-11-10T14:24:08.882Z",
+    "success": true,
+    "latencyMs": 12336,
+    "stepCount": 10,
+    "riskLevel": "low",
+    "sessionId": "1e3a2f6e-eb88-4cd9-9f18-5afd209ca91f",
+    "experiments": [
+      {
+        "skillId": "need-extraction",
+        "variant": "control"
+      }
+    ]
+  },
+  {
+    "id": "16402598-bb3f-4560-9a71-15a801f5e159",
+    "requestId": "93ed125b-0c3b-4dd5-a0de-f501f02e19ad",
+    "createdAt": "2026-11-10T14:07:21.538Z",
+    "success": false,
+    "latencyMs": 8345,
+    "stepCount": 0,
+    "failedStep": "planner",
+    "sessionId": "24238b2e-399f-4e40-86d6-1ea11b70cb81"
+  },
+  {
+    "id": "4d2cde9c-09c4-4301-8d4b-15e7b2a92a4d",
+    "requestId": "f76b36bc-2ef9-400e-850c-d801a48ee744",
+    "createdAt": "2026-11-10T14:05:27.054Z",
+    "success": false,
+    "latencyMs": 230,
+    "stepCount": 0,
+    "failedStep": "planner",
+    "sessionId": "870afdc0-3812-4e9d-b1ee-a6e7f41f0e44"
+  },
+  {
+    "id": "2e900aab-1f05-4c01-8054-45dec745b79c",
+    "requestId": "728f210c-4168-4784-b6af-7f2c22e6e0e9",
+    "createdAt": "2026-11-10T13:18:15.484Z",
+    "success": false,
+    "latencyMs": 216,
+    "stepCount": 0,
+    "failedStep": "planner",
+    "sessionId": "7a19fa9b-70fa-4686-b2ab-6ce80c143454"
+  },
+  {
+    "id": "52f38ba4-3140-4ccb-9b6d-7b1179233037",
+    "requestId": "0375b43a-1ee4-460c-9356-f7b376deab94",
+    "createdAt": "2026-11-10T13:09:31.601Z",
+    "success": false,
+    "latencyMs": 198,
+    "stepCount": 0,
+    "failedStep": "planner",
+    "sessionId": "7a1556cf-cded-40a6-88ce-940791a2687f"
+  },
+  {
+    "id": "13c54ecd-cf39-40e4-a94b-e3b5b393e6a3",
+    "requestId": "74e789d1-79a9-4525-bc86-f86d673056fe",
+    "createdAt": "2026-11-10T13:00:12.199Z",
+    "success": false,
+    "latencyMs": 18,
+    "stepCount": 0,
+    "failedStep": "planner",
+    "sessionId": "4391b1b5-2fd0-413d-bec8-569b793b8833"
+  },
+  {
+    "id": "c29521ec-5177-4a96-8308-30ad64ecf747",
+    "requestId": "e4c9b4d4-832a-4a3f-844d-3bd9059ecd16",
+    "createdAt": "2026-11-10T12:13:39.713Z",
+    "success": false,
+    "latencyMs": 8,
+    "stepCount": 0,
+    "failedStep": "planner",
+    "sessionId": "6af54402-7f99-404f-89a0-16fe39ce7692"
+  },
+  {
+    "id": "f26ca5da-2493-4a0b-9006-a9067b2e26cc",
+    "requestId": "29052c23-5aec-4b89-b84a-3ff356a2e9ab",
+    "createdAt": "2026-11-09T14:32:34.299Z",
+    "success": false,
+    "latencyMs": 11,
+    "stepCount": 0,
+    "failedStep": "planner",
+    "sessionId": "25070985-7d5a-478b-8939-34c8e0d52c09"
+  },
+  {
     "id": "895e49a6-6aff-4cbd-a110-e0cc6eebc6b1",
     "requestId": "218d2a3d-527b-4e5e-819c-47aaaaac4170",
     "createdAt": "2026-08-11T13:46:08.152Z",

@@ -1,0 +1,282 @@
+{
+  "checkedAt": "2026-11-10",
+  "repository": "/Users/hopej/Documents/code/pm-open-source/snack-agent-studio",
+  "method": "TypeScript source transpiled into isolated sandbox; model fetch replaced by deterministic fixtures; no live model or MCP calls",
+  "total": 17,
+  "verified": 17,
+  "results": [
+    {
+      "name": "默认价格任务生成9步、调用6次模型",
+      "verified": true,
+      "evidence": {
+        "capabilities": [
+          "need-extraction",
+          "query_products",
+          "query_activities",
+          "query_coupons",
+          "recommendation-decision",
+          "calculate_price",
+          "recommendation-reason",
+          "response-generator",
+          "risk-check"
+        ],
+        "modelCalls": 6,
+        "finalPrice": 49.8
+      }
+    },
+    {
+      "name": "模型候选经过白名单、去重和必经规则重组",
+      "verified": true,
+      "evidence": {
+        "capabilities": [
+          "need-extraction",
+          "query_products",
+          "complaint-triage",
+          "recommendation-decision",
+          "recommendation-reason",
+          "response-generator",
+          "risk-check"
+        ],
+        "validation": {
+          "accepted": [
+            "complaint-triage"
+          ],
+          "rejected": [
+            "unknown-skill",
+            "complaint-triage"
+          ]
+        }
+      }
+    },
+    {
+      "name": "停用风控在模型调用之前拒绝计划",
+      "verified": true,
+      "evidence": {
+        "modelCalls": 0
+      }
+    },
+    {
+      "name": "把推荐决策移到首位会丢失强制计价Tool",
+      "verified": true,
+      "evidence": {
+        "capabilities": [
+          "recommendation-decision",
+          "query_products",
+          "query_activities",
+          "query_coupons",
+          "need-extraction",
+          "recommendation-reason",
+          "response-generator",
+          "risk-check"
+        ]
+      }
+    },
+    {
+      "name": "价格意图仅靠本轮正则，忽略需求抽取needs_price",
+      "verified": true,
+      "evidence": {
+        "capabilities": [
+          "need-extraction",
+          "query_products",
+          "recommendation-decision",
+          "recommendation-reason",
+          "response-generator",
+          "risk-check"
+        ],
+        "extractedNeedsPrice": true
+      }
+    },
+    {
+      "name": "商品零匹配时回退完整商品池，突破预算",
+      "verified": true,
+      "evidence": {
+        "filterFallback": true,
+        "prices": [
+          45.9,
+          29.9,
+          25.9,
+          39.9,
+          19.9
+        ]
+      }
+    },
+    {
+      "name": "单品预算过滤不能保证购物篮预算",
+      "verified": true,
+      "evidence": {
+        "budget": 50,
+        "selectedIds": [
+          "P002",
+          "P001",
+          "P004"
+        ],
+        "subtotal": 101.7,
+        "activityApplied": {
+          "id": "A001",
+          "name": "零食满减季"
+        },
+        "couponApplied": {
+          "id": "C001",
+          "name": "新人券",
+          "discount": 8
+        },
+        "savings": 23,
+        "finalPrice": 78.7,
+        "note": "按推荐商品各 1 件试算，不含运费"
+      }
+    },
+    {
+      "name": "计价固定每款一件，忽略quantity",
+      "verified": true,
+      "evidence": {
+        "requestedQuantity": 3,
+        "subtotal": 29.9,
+        "note": "按推荐商品各 1 件试算，不含运费"
+      }
+    },
+    {
+      "name": "计价忽略优惠券stackable=false",
+      "verified": true,
+      "evidence": {
+        "isolatedCouponSet": [
+          "C003"
+        ],
+        "stackable": false,
+        "subtotal": 75.8,
+        "activityApplied": {
+          "id": "A002",
+          "name": "坚果组合优惠"
+        },
+        "couponApplied": {
+          "id": "C003",
+          "name": "品类券",
+          "discount": 6
+        },
+        "savings": 10.59,
+        "finalPrice": 65.21,
+        "note": "按推荐商品各 1 件试算，不含运费"
+      }
+    },
+    {
+      "name": "推荐结果丢失模型返回的排序",
+      "verified": true,
+      "evidence": {
+        "modelOrder": [
+          "P006",
+          "P001"
+        ],
+        "responseOrder": [
+          "P001",
+          "P006"
+        ]
+      }
+    },
+    {
+      "name": "澄清暂停标志和投诉升级标志不会控制执行",
+      "verified": true,
+      "evidence": {
+        "capabilities": [
+          "need-extraction",
+          "query_products",
+          "clarification-question",
+          "complaint-triage",
+          "recommendation-decision",
+          "recommendation-reason",
+          "response-generator",
+          "risk-check"
+        ],
+        "handoff": {
+          "required": false
+        }
+      }
+    },
+    {
+      "name": "风控拒绝仍记执行成功，不自动入人工队列",
+      "verified": true,
+      "evidence": {
+        "finalReply": "修正回复",
+        "handoffRequired": true,
+        "metricSuccess": true,
+        "handoffRecords": 0
+      }
+    },
+    {
+      "name": "Schema校验允许必填boolean为null",
+      "verified": true,
+      "evidence": {
+        "accepted": {
+          "passed": null
+        },
+        "requiredType": "boolean"
+      }
+    },
+    {
+      "name": "期望事实只在Tool输出出现也能通过Eval",
+      "verified": true,
+      "evidence": {
+        "score": 100,
+        "passed": true,
+        "finalReply": "这是隔离验证回复。"
+      }
+    },
+    {
+      "name": "命中一条禁用表述仍可91分通过Eval",
+      "verified": true,
+      "evidence": {
+        "score": 91,
+        "passed": true,
+        "issues": [
+          "回复包含禁用表述：绝对安全"
+        ]
+      }
+    },
+    {
+      "name": "实际可见评测集由23条本地配置和79条种子合并",
+      "verified": true,
+      "evidence": {
+        "persisted": 23,
+        "supplementalSeeds": 79,
+        "merged": 102
+      }
+    },
+    {
+      "name": "同一JSON文件并发写入发生共享临时文件冲突",
+      "verified": true,
+      "evidence": {
+        "statuses": [
+          "fulfilled",
+          "rejected"
+        ],
+        "errors": [
+          "ENOENT"
+        ]
+      }
+    }
+  ],
+  "typecheck": {
+    "command": "node node_modules/typescript/bin/tsc --noEmit --incremental false",
+    "node": "24.22.1",
+    "status": "passed"
+  },
+  "inventory": {
+    "page_count": 7,
+    "api_route_count": 27,
+    "api_handler_count": 43,
+    "json_files": 19,
+    "skills": 13,
+    "enabled_skills": 13,
+    "tools": 6,
+    "installed_versions": {
+      "next": "15.5.19",
+      "react": "19.2.7",
+      "typescript": "5.9.3"
+    }
+  },
+  "baseline": {
+    "gitHead": "a7eacb3",
+    "preexistingModifiedFiles": [
+      "data/metrics.json"
+    ],
+    "mcpServers": 0
+  }
+}
